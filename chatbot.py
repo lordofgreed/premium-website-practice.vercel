@@ -27,6 +27,9 @@ def get_bot_reply(message):
             "👋 Welcome to **OGhaitong Premium Support**!\n\n"
             "I'm your intelligent virtual gaming-concierge assistant. Here is what you can ask me about:\n"
             "• 📦 **Shipping & Delivery** — *rates, processing, and speed*\n"
+            "• 📍 **Track Order** — *find out where your gear is*\n"
+            "• 🛑 **Cancel Order** — *cancellation policy & steps*\n"
+            "• 💸 **Discounts & Promos** — *active coupons and offers*\n"
             "• 🔄 **Returns & Refunds** — *our hassle-free 30-day policy*\n"
             "• 🛡️ **Warranty Support** — *device hardware protection details*\n"
             "• 🎮 **Esports & Gaming** — *Mobile Legends triggers, FAI8 Pro League gear*\n"
@@ -36,8 +39,53 @@ def get_bot_reply(message):
             "Just type any keyword or ask me a question naturally!"
         )
 
-    # Core customer service matchers
-    if "shipping" in lower_msg or "delivery" in lower_msg or "track" in lower_msg:
+    # --- NEW ADDITIONS: Specific E-commerce Workflows ---
+    
+    # Order Tracking
+    if "where is my order" in lower_msg or "status" in lower_msg or ("track" in lower_msg and "order" in lower_msg):
+        main_reply = (
+            "I can certainly help you track your gear! 📦📍\n\n"
+            "To give you the most accurate update, could you please reply with your **Order ID**? "
+            "(It usually starts with 'OG' and can be found in your confirmation email).\n\n"
+            "Once you provide that, I'll fetch the exact location of your package!"
+        )
+    
+    # Order Cancellation
+    elif "cancel" in lower_msg:
+        main_reply = (
+            "I understand you'd like to cancel your order. Let's see what we can do. 🛑\n\n"
+            "• **Timeframe:** Orders can be easily cancelled for a full refund within **2 hours** of placement, before they hit our dispatch queue.\n"
+            "• **Next Step:** Please reply with your **Order ID** and your reason for cancelling. I will process this immediately (or route it to a human agent if your order is already packed!)."
+        )
+        
+    # Promo Codes & Discounts
+    elif "discount" in lower_msg or "promo" in lower_msg or "coupon" in lower_msg or "offer" in lower_msg:
+        main_reply = (
+            "Who doesn't love a good deal? 💸\n\n"
+            "• **Current Offer:** Use code **OGGAMER10** at checkout for 10% off your entire order!\n"
+            "• **Newsletter:** Subscribe to our email newsletter at the bottom of our website to get an exclusive 15% off coupon for your first purchase.\n"
+            "• **How to Apply:** Just paste your code into the 'Promo Code' box during the Razorpay checkout process."
+        )
+
+    # Restock / Out of Stock
+    elif "restock" in lower_msg or "out of stock" in lower_msg or "available" in lower_msg:
+        main_reply = (
+            "Eyeing some gear that's currently sold out? Don't worry! 🛒\n\n"
+            "• **Restock Alerts:** The best way to know when an item is back is to visit the product page and click the **'Notify Me'** button.\n"
+            "• **Timeline:** Our premium esports gear usually restocks within **10-14 business days** depending on manufacturing cycles."
+        )
+
+    # Wrong or Missing Items
+    elif "wrong item" in lower_msg or "missing" in lower_msg:
+        main_reply = (
+            "Oh no! I am so sorry to hear there's an issue with your delivery. Let's fix this immediately. 🛠️\n\n"
+            "• **What to do:** Please email **support@oghaitong.com** with your **Order ID** and a **clear photo** of what you received (and the packaging).\n"
+            "• **Resolution:** Our human priority team will review it right away and dispatch the correct/missing items via express shipping, on the house!"
+        )
+
+    # --- CORE MODULES (Original logic retained and slightly optimized) ---
+    
+    elif "shipping" in lower_msg or "delivery" in lower_msg:
         main_reply = (
             "We offer **Free Standard Global Shipping** on all premium vault items! 📦\n\n"
             "• **Delivery Timeline:** Usually takes **3 to 5 business days** depending on your region.\n"
@@ -91,7 +139,7 @@ def get_bot_reply(message):
             "👋 **Hello there, champion!**\n\n"
             "I'm your official **OGhaitong Support AI**. I'm here to help you configure, troubleshoot, or buy your next-gen gear!\n\n"
             "Feel free to ask me questions like:\n"
-            "• *\"When will my order arrive?\"*\n"
+            "• *\"Where is my order?\"*\n"
             "• *\"Tell me about the 30-day return policy.\"*\n"
             "• *\"What gaming accessories do you have?\"*\n\n"
             "How can I level up your shopping experience today? ⚡"
@@ -100,7 +148,7 @@ def get_bot_reply(message):
         # Default fallback response
         return (
             "Thanks for reaching out! 💬\n\n"
-            "I couldn't find a direct matches in my core modules for that specific question, but I'm learning more every day!\n\n"
+            "I couldn't find direct matches in my core modules for that specific question, but I'm learning more every day!\n\n"
             "For active orders, custom delivery tracking, or specific technical troubleshooting, please contact our expert human team directly at **support@oghaitong.com** or open a priority ticket in your account dashboard. 🤝"
         )
 
